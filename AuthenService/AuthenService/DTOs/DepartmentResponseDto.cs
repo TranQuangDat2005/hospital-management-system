@@ -8,6 +8,6 @@ namespace User_Authentication_Service.DTOs
         public string Description { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
-        public int ActiveUserCount { get; set; }  // Số nhân viên đang active - hỗ trợ dependency check UI
+        public int ActiveUserCount { get; set; }  
     }
 }

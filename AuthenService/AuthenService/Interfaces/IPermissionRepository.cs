@@ -4,14 +4,23 @@ namespace User_Authentication_Service.Interfaces
 {
     public interface IPermissionRepository
     {
-        /// <summary>
-        /// Lấy danh sách Permission name theo Role.
-        /// </summary>
+        // ── Read ─────────────────────────────────────────────────────────────
         Task<IEnumerable<string>> GetPermissionNamesByRoleAsync(string roleName);
-
-        /// <summary>
-        /// Kiểm tra role có permission cụ thể không.
-        /// </summary>
         Task<bool> HasPermissionAsync(string roleName, string permissionName);
+
+        Task<IEnumerable<Permission>> GetAllPermissionsAsync();
+        Task<Permission?> GetPermissionByIdAsync(int id);
+        Task<bool> PermissionNameExistsAsync(string name);
+
+        Task<IEnumerable<RolePermission>> GetRolePermissionsAsync(string roleName);
+        Task<IEnumerable<string>> GetAllRoleNamesAsync();
+        Task<bool> RolePermissionExistsAsync(string roleName, int permissionId);
+
+        // ── Write ────────────────────────────────────────────────────────────
+        Task<Permission> CreatePermissionAsync(Permission permission);
+        Task<bool> DeletePermissionAsync(int id);
+
+        Task<RolePermission> AssignPermissionToRoleAsync(RolePermission rolePermission);
+        Task<bool> RevokePermissionFromRoleAsync(int rolePermissionId);
     }
 }
