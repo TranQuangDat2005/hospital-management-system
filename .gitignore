@@ -1,1 +1,16 @@
 .vs/
+
+## .NET build artifacts
+bin/
+obj/
+*.user
+
+## Secrets - KHÔNG commit file này, chứa JWT secret thật
+**/appsettings.Development.json
+
+## Environment variables
+.env
+*.env
+
+## Logs
+*.log
