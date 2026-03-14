@@ -74,6 +74,7 @@ builder.Services.AddScoped<IDepartmentRepository,   DepartmentRepository>();
 builder.Services.AddScoped<IAuthService,            AuthService>();
 builder.Services.AddScoped<IUserService,            UserService>();
 builder.Services.AddScoped<IDepartmentService,      DepartmentService>();
+builder.Services.AddScoped<IPermissionService,      PermissionService>();
 
 // ─── Controllers & Swagger ───────────────────────────────────────────────────
 builder.Services.AddControllers();
