@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using User_Authentication_Service.Model;
 using User_Authentication_Service.ConfigModel;
 
@@ -13,6 +13,8 @@ namespace User_Authentication_Service.Data
 
         public DbSet<Users> Users { get; set; }
         public DbSet<Departments> Departments { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
+        public DbSet<RolePermission> RolePermissions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -21,3 +23,4 @@ namespace User_Authentication_Service.Data
 
     }
 }
+
