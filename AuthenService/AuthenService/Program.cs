@@ -9,9 +9,11 @@ using User_Authentication_Service.Interfaces;
 using User_Authentication_Service.Middleware;
 using User_Authentication_Service.Repositories;
 using User_Authentication_Service.Services;
+using DotNetEnv;
+
+Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
-
 // ─── Database ────────────────────────────────────────────────────────────────
 builder.Services.AddDbContext<UserAuthenDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreConnection")));

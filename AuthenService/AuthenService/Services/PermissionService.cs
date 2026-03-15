@@ -13,8 +13,6 @@ namespace User_Authentication_Service.Services
             _permissionRepo = permissionRepo;
         }
 
-        // ── Permissions ───────────────────────────────────────────────────────
-
         public async Task<IEnumerable<PermissionResponseDto>> GetAllPermissionsAsync()
         {
             var permissions = await _permissionRepo.GetAllPermissionsAsync();
@@ -60,8 +58,6 @@ namespace User_Authentication_Service.Services
                 ? (true,  $"Đã xóa quyền '{permission.Name}'.")
                 : (false, "Xóa quyền thất bại.");
         }
-
-        // ── Roles ─────────────────────────────────────────────────────────────
 
         public async Task<IEnumerable<RoleSummaryDto>> GetAllRolesAsync()
         {
