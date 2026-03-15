@@ -1,4 +1,4 @@
-using System.Text;
+﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -14,11 +14,8 @@ using DotNetEnv;
 Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
-// ─── Database ────────────────────────────────────────────────────────────────
 builder.Services.AddDbContext<UserAuthenDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreConnection")));
-
-// ─── JWT Authentication ──────────────────────────────────────────────────────
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var secretKey   = jwtSettings["SecretKey"] ?? throw new InvalidOperationException("JWT SecretKey chưa cấu hình!");
 
@@ -38,7 +35,7 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience         = true,
         ValidAudience            = jwtSettings["Audience"],
         ValidateLifetime         = true,
-        ClockSkew                = TimeSpan.Zero  // Không cho phép dung sai thời gian
+        ClockSkew                = TimeSpan.Zero  
     };
 
     options.Events = new JwtBearerEvents
@@ -66,9 +63,7 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddAuthorization();
-
-// ─── Dependency Injection ─────────────────────────────────────────────────────
-builder.Services.AddSingleton<JwtHelper>();                              // Singleton vì có blacklist in-memory
+builder.Services.AddSingleton<JwtHelper>();                              
 
 builder.Services.AddScoped<IUserRepository,         UserRepository>();
 builder.Services.AddScoped<IPermissionRepository,   PermissionRepository>();
@@ -77,8 +72,6 @@ builder.Services.AddScoped<IAuthService,            AuthService>();
 builder.Services.AddScoped<IUserService,            UserService>();
 builder.Services.AddScoped<IDepartmentService,      DepartmentService>();
 builder.Services.AddScoped<IPermissionService,      PermissionService>();
-
-// ─── Controllers & Swagger ───────────────────────────────────────────────────
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -89,8 +82,6 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1",
         Description = "API xác thực và quản lý người dùng bệnh viện"
     });
-
-    // Thêm Bearer JWT vào Swagger UI
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name         = "Authorization",
@@ -116,11 +107,7 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
-
-// ─── Build App ───────────────────────────────────────────────────────────────
 var app = builder.Build();
-
-// ─── Middleware Pipeline ─────────────────────────────────────────────────────
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -132,11 +119,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-// Thứ tự quan trọng: Authentication → Authorization → PermissionMiddleware
 app.UseAuthentication();
 app.UseAuthorization();
-app.UsePermissionMiddleware();   // Kiểm tra quyền động từ DB
+app.UsePermissionMiddleware();   
 
 app.MapControllers();
 

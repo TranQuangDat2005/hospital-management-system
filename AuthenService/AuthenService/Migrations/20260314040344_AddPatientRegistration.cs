@@ -4,10 +4,8 @@
 
 namespace User_Authentication_Service.Migrations
 {
-    /// <inheritdoc />
     public partial class AddPatientRegistration : Migration
     {
-        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.InsertData(
@@ -15,8 +13,6 @@ namespace User_Authentication_Service.Migrations
                 columns: new[] { "RolePermissionID", "PermissionID", "RoleName" },
                 values: new object[] { 15, 5, "Patient" });
         }
-
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DeleteData(

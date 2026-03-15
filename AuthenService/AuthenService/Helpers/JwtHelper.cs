@@ -1,4 +1,4 @@
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
@@ -12,8 +12,6 @@ namespace User_Authentication_Service.Helpers
         private readonly string _issuer;
         private readonly string _audience;
         private readonly int _expiryMinutes;
-
-        // Token blacklist: lưu các token đã logout (in-memory)
         private static readonly HashSet<string> _blacklistedTokens = new();
         private static readonly object _lock = new();
 
@@ -25,10 +23,6 @@ namespace User_Authentication_Service.Helpers
             _audience = jwtSettings["Audience"] ?? "HospitalApp";
             _expiryMinutes = int.Parse(jwtSettings["ExpiryMinutes"] ?? "60");
         }
-
-        /// <summary>
-        /// Tạo JWT token cho user đã xác thực.
-        /// </summary>
         public (string Token, DateTime ExpiresAt) GenerateToken(Users user)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey));
@@ -61,10 +55,6 @@ namespace User_Authentication_Service.Helpers
 
             return (new JwtSecurityTokenHandler().WriteToken(token), expiresAt);
         }
-
-        /// <summary>
-        /// Thêm token vào blacklist khi logout.
-        /// </summary>
         public bool BlacklistToken(string token)
         {
             lock (_lock)
@@ -72,10 +62,6 @@ namespace User_Authentication_Service.Helpers
                 return _blacklistedTokens.Add(token);
             }
         }
-
-        /// <summary>
-        /// Kiểm tra token có bị blacklist không.
-        /// </summary>
         public bool IsBlacklisted(string token)
         {
             lock (_lock)
@@ -83,10 +69,6 @@ namespace User_Authentication_Service.Helpers
                 return _blacklistedTokens.Contains(token);
             }
         }
-
-        /// <summary>
-        /// Lấy principal từ token (kể cả expired).
-        /// </summary>
         public ClaimsPrincipal? GetPrincipalFromToken(string token)
         {
             var tokenValidationParameters = new TokenValidationParameters
@@ -97,7 +79,7 @@ namespace User_Authentication_Service.Helpers
                 ValidIssuer = _issuer,
                 ValidateAudience = true,
                 ValidAudience = _audience,
-                ValidateLifetime = false // Cho phép đọc token hết hạn
+                ValidateLifetime = false 
             };
 
             try

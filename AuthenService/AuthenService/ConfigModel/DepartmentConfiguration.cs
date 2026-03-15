@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using User_Authentication_Service.Model;
 
@@ -31,15 +31,8 @@ namespace User_Authentication_Service.ConfigModel
 
             builder.Property(d => d.CreatedAt)
                    .HasDefaultValueSql("NOW()");
-
-            // Unique index: tên phòng ban không được trùng (xác thực theo spec)
             builder.HasIndex(d => d.Name).IsUnique();
-
-            // Global query filter: tự động ẩn record đã soft-delete
             builder.HasQueryFilter(d => !d.IsDeleted);
-
-            // FK: Users → Departments (ON DELETE RESTRICT)
-            // Đây chính là dependency check - DB chặn xóa nếu còn user gắn với dept này
             builder.HasMany(d => d.Users)
                    .WithOne()
                    .HasForeignKey(u => u.DepartmentID)

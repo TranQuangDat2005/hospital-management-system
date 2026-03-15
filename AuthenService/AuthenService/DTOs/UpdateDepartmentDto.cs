@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace User_Authentication_Service.DTOs
 {
@@ -12,8 +12,6 @@ namespace User_Authentication_Service.DTOs
 
         [MaxLength(500)]
         public string? Description { get; set; }
-
-        // Cho phép Admin thay đổi trạng thái (Inactive ↔ Active)
         [RegularExpression("Active|Inactive", ErrorMessage = "Status chỉ được là 'Active' hoặc 'Inactive'")]
         public string? Status { get; set; }
     }

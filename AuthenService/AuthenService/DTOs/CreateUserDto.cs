@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace User_Authentication_Service.DTOs
 {
@@ -21,7 +21,7 @@ namespace User_Authentication_Service.DTOs
         public string Phone { get; set; } = string.Empty;
 
         [Required]
-        public string Role { get; set; } = "Doctor";  // Admin | Doctor | Nurse | Receptionist
+        public string Role { get; set; } = "Doctor";  
 
         public int DepartmentID { get; set; }
 

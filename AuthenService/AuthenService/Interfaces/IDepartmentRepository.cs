@@ -1,4 +1,4 @@
-using User_Authentication_Service.Model;
+﻿using User_Authentication_Service.Model;
 
 namespace User_Authentication_Service.Interfaces
 {
@@ -10,7 +10,6 @@ namespace User_Authentication_Service.Interfaces
         Task<bool> HasActiveUsersAsync(int departmentId);
         Task AddAsync(Departments department);
         void Update(Departments department);
-        /// <summary>Soft delete — không xóa thật để giữ hồ sơ lịch sử</summary>
         Task SoftDeleteAsync(int id);
         Task<bool> SaveChangesAsync();
     }

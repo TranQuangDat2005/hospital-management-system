@@ -1,10 +1,9 @@
-using User_Authentication_Service.Model;
+﻿using User_Authentication_Service.Model;
 
 namespace User_Authentication_Service.Interfaces
 {
     public interface IPermissionRepository
     {
-        // ── Read ─────────────────────────────────────────────────────────────
         Task<IEnumerable<string>> GetPermissionNamesByRoleAsync(string roleName);
         Task<bool> HasPermissionAsync(string roleName, string permissionName);
 
@@ -15,8 +14,6 @@ namespace User_Authentication_Service.Interfaces
         Task<IEnumerable<RolePermission>> GetRolePermissionsAsync(string roleName);
         Task<IEnumerable<string>> GetAllRoleNamesAsync();
         Task<bool> RolePermissionExistsAsync(string roleName, int permissionId);
-
-        // ── Write ────────────────────────────────────────────────────────────
         Task<Permission> CreatePermissionAsync(Permission permission);
         Task<bool> DeletePermissionAsync(int id);
 
