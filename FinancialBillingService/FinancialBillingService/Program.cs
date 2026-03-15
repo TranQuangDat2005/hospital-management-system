@@ -1,4 +1,4 @@
-﻿using DotNetEnv;
+using DotNetEnv;
 using FinancialBillingService.ConfigModel;
 using FinancialBillingService.Data;
 using FinancialBillingService.Interfaces;

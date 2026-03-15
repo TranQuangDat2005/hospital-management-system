@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Patient_Scheduling_Service.Data;
 using Patient_Scheduling_Service.Interfaces;
 using Patient_Scheduling_Service.Model;
@@ -24,6 +24,14 @@ namespace Patient_Scheduling_Service.Repositories
             return await _context.Appointments
                 .Where(a => a.PatientID == patientId && !a.IsDeleted)
                 .OrderByDescending(a => a.AppointmentDate)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Appointments>> GetDoctorAppointmentsAsync(int doctorId)
+        {
+            return await _context.Appointments
+                .Where(a => a.DoctorID == doctorId && !a.IsDeleted)
+                .OrderBy(a => a.AppointmentDate)
                 .ToListAsync();
         }
 

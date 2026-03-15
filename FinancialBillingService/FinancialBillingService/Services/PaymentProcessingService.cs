@@ -1,4 +1,4 @@
-﻿using FinancialBillingService.ConfigModel;
+using FinancialBillingService.ConfigModel;
 using FinancialBillingService.DTOs;
 using FinancialBillingService.Interfaces;
 using FinancialBillingService.Model;

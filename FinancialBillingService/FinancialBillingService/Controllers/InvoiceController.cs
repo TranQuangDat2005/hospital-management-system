@@ -1,4 +1,4 @@
-﻿using FinancialBillingService.DTOs;
+using FinancialBillingService.DTOs;
 using FinancialBillingService.Interfaces;
 using FinancialBillingService.Model;
 using Microsoft.AspNetCore.Authorization;
@@ -34,7 +34,7 @@ namespace FinancialBillingService.Controllers
             if (!invoiceList.Any())
                 return NotFound(new { message = "No records found." });
 
-            var baseUrl = $"{Request.Scheme}://{Request.Host}";
+            var baseUrl = $"{Request.Scheme}:
             var result = invoiceList.Select(i => new PaymentHistoryResponseDto
             {
                 InvoiceID = i.InvoiceID,
@@ -73,3 +73,4 @@ namespace FinancialBillingService.Controllers
         }
     }
 }
+

@@ -8,7 +8,9 @@ namespace PharmacyMedicationService.Interfaces
 {
     public interface IPharmacyService
     {
+        Task<IEnumerable<PrescriptionResponseDto>> GetPrescriptionQueueAsync();
+        Task<PrescriptionDetailDto?> GetPrescriptionDetailAsync(Guid prescriptionId);
         Task<IEnumerable<PrescriptionItemResponseDto>> GetPrescriptionItemsAsync(Guid prescriptionId);
-        Task<bool> UpdateItemStatusAsync(UpdateItemStatusDto updateDto);
+        Task<bool> UpdateItemStatusAsync(UpdateItemStatusDto request);
     }
 }

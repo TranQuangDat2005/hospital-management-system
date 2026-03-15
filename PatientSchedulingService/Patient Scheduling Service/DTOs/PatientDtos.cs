@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace Patient_Scheduling_Service.DTOs
 {
@@ -30,5 +30,10 @@ namespace Patient_Scheduling_Service.DTOs
     {
         public string? CCCD { get; set; }
         public string? PhoneNumber { get; set; }
+    }
+
+    public class RescheduleDto
+    {
+        public DateTime NewDate { get; set; }
     }
 }

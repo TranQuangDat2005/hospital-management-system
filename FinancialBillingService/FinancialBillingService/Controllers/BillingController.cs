@@ -1,4 +1,4 @@
-﻿using FinancialBillingService.Interfaces;
+using FinancialBillingService.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,6 +6,7 @@ namespace FinancialBillingService.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class BillingController : ControllerBase
     {
         private readonly IBillingService _billingService;
