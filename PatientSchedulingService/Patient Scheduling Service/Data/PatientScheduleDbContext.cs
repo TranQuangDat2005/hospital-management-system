@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Patient_Scheduling_Service.Model;
 
 namespace Patient_Scheduling_Service.Data
@@ -11,6 +11,7 @@ namespace Patient_Scheduling_Service.Data
 
         public DbSet<Patients> Patients { get; set; }
         public DbSet<Appointments> Appointments { get; set; }
+        public DbSet<HealthInsurance> HealthInsurances { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

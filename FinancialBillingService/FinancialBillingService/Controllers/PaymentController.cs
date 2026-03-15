@@ -1,4 +1,4 @@
-﻿using FinancialBillingService.DTOs;
+using FinancialBillingService.DTOs;
 using FinancialBillingService.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +8,7 @@ namespace FinancialBillingService.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class PaymentController : ControllerBase
     {
         private readonly IPaymentProcessingService _paymentProcessingService;
@@ -17,7 +18,6 @@ namespace FinancialBillingService.Controllers
             _paymentProcessingService = paymentProcessingService;
         }
 
-        
         [HttpGet("visit/{visitId}/screen-info")]
         public async Task<IActionResult> GetPaymentInfoForScreen(int visitId, [FromQuery] int patientId)
         {
@@ -37,12 +37,12 @@ namespace FinancialBillingService.Controllers
             }
         }
 
-        
         [HttpPost("process")]
         public async Task<IActionResult> ProcessPayment([FromBody] PaymentRequestDto request)
         {
             if (request == null || request.VisitID <= 0 || request.PatientID <= 0)
                 return BadRequest("Invalid payment request.");
+                
             var claimValue = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? User.FindFirstValue("sub");
             int cashierId = int.TryParse(claimValue, out var parsed) ? parsed : 0;
 
@@ -57,7 +57,6 @@ namespace FinancialBillingService.Controllers
             }
         }
 
-        
         [HttpPost("vnpay/create-url")]
         [AllowAnonymous] 
         public async Task<IActionResult> CreateVnPaymentUrl([FromBody] VnPaymentRequestDto request)
@@ -71,7 +70,6 @@ namespace FinancialBillingService.Controllers
             return Ok(new { paymentUrl = url });
         }
 
-        
         [HttpGet("vnpay/callback")]
         [AllowAnonymous] 
         public async Task<IActionResult> VnPaymentCallback()

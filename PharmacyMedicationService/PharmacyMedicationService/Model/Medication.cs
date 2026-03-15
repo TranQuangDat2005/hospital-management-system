@@ -9,6 +9,6 @@ namespace PharmacyMedicationService.Model
         public string Unit { get; set; } = string.Empty;
         public decimal UnitPrice { get; set; }
         public string Instructions { get; set; } = string.Empty;
-        public bool Status { get; set; } // Active/Inactive
+        public bool Status { get; set; } 
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Security.Claims;
+using System.Security.Claims;
 using User_Authentication_Service.Interfaces;
 
 namespace User_Authentication_Service.Middleware

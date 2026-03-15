@@ -1,4 +1,4 @@
-﻿using FinancialBillingService.DTOs;
+using FinancialBillingService.DTOs;
 using FinancialBillingService.Interfaces;
 using FinancialBillingService.Model;
 using Microsoft.AspNetCore.Authorization;
@@ -8,6 +8,7 @@ namespace FinancialBillingService.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "Admin")]
     public class ServiceCatalogController : ControllerBase
     {
         private readonly IServiceCatalogService _serviceCatalogService;
@@ -18,11 +19,22 @@ namespace FinancialBillingService.Controllers
         }
         [HttpGet("active")]
         [AllowAnonymous]
+        [HttpGet("active")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetActiveServices()
         {
             var services = await _serviceCatalogService.GetActiveServicesAsync();
             return Ok(services);
         }
+
+        [HttpGet("public")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetPublicServices()
+        {
+            var services = await _serviceCatalogService.GetActiveServicesAsync();
+            return Ok(services);
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAllServices()
         {

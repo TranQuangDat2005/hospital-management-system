@@ -17,6 +17,43 @@ namespace PharmacyMedicationService.Services
             _repository = repository;
         }
 
+        public async Task<IEnumerable<PrescriptionResponseDto>> GetPrescriptionQueueAsync()
+        {
+            
+            
+            
+            
+            
+            
+            
+            
+            var items = new List<PrescriptionItem>(); 
+            
+            return new List<PrescriptionResponseDto>();
+        }
+
+        public async Task<PrescriptionDetailDto?> GetPrescriptionDetailAsync(Guid prescriptionId)
+        {
+            var items = await _repository.GetByPrescriptionIdAsync(prescriptionId);
+            if (!items.Any()) return null;
+
+            return new PrescriptionDetailDto
+            {
+                PrescriptionId = prescriptionId,
+                Items = items.Select(item => new PrescriptionItemResponseDto
+                {
+                    Id = item.Id,
+                    PrescriptionId = item.PrescriptionId,
+                    MedicationId = item.MedicationId,
+                    MedicationName = item.Medication?.Name ?? "Unknown",
+                    Quantity = item.Quantity,
+                    UnitPriceAtOrder = item.UnitPriceAtOrder,
+                    Status = item.Status.ToString(),
+                    UpdatedAt = item.UpdatedAt
+                }).ToList()
+            };
+        }
+
         public async Task<IEnumerable<PrescriptionItemResponseDto>> GetPrescriptionItemsAsync(Guid prescriptionId)
         {
             var items = await _repository.GetByPrescriptionIdAsync(prescriptionId);
@@ -47,13 +84,13 @@ namespace PharmacyMedicationService.Services
             {
                 if (request.NewStatus == ItemStatus.Paid)
                 {
-                    // Transition to Paid: Only from PendingPayment
+                    
                     if (item.Status != ItemStatus.PendingPayment)
                     {
                         throw new InvalidOperationException($"Cannot transition item {item.Id} to Paid from {item.Status}");
                     }
 
-                    // BR-PH-04: Price Integrity - Lock the price at payment time
+                    
                     var medication = await _repository.GetMedicationByIdAsync(item.MedicationId);
                     if (medication != null)
                     {
@@ -62,16 +99,16 @@ namespace PharmacyMedicationService.Services
                 }
                 else if (request.NewStatus == ItemStatus.Dispensed)
                 {
-                    // BR-PH-01: Lock Dispense - System must throw error if transferring to Dispensed while PendingPayment
+                    
                     if (item.Status != ItemStatus.Paid)
                     {
                         throw new InvalidOperationException($"BR-PH-01 Violated: Cannot dispense item {item.Id} because it is not Paid. Current status: {item.Status}");
                     }
                     
-                    // BR-PH-03: No Inventory Link - We only update status, no stock adjustment required.
+                    
                 }
 
-                // BR-PH-02: Item Independence - We update item strictly according to its own isolated logic
+                
                 item.Status = request.NewStatus;
                 item.UpdatedAt = DateTime.UtcNow;
             }
@@ -81,3 +118,4 @@ namespace PharmacyMedicationService.Services
         }
     }
 }
+

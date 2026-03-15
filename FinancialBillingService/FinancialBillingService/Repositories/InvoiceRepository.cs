@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using FinancialBillingService.Data;
 using FinancialBillingService.Interfaces;
 using FinancialBillingService.Model;

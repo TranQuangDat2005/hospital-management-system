@@ -1,4 +1,4 @@
-﻿namespace FinancialBillingService.DTOs
+namespace FinancialBillingService.DTOs
 {
     public class PaymentRequestDto
     {

@@ -19,15 +19,33 @@ namespace PharmacyMedicationService.Controllers
             _pharmacyService = pharmacyService;
         }
 
-        // GET: api/prescriptions/{prescriptionId}/items
+        [HttpGet("queue")]
+        [Authorize(Roles = "Pharmacist,Admin")]
+        public async Task<IActionResult> GetPrescriptionQueue()
+        {
+            var queue = await _pharmacyService.GetPrescriptionQueueAsync();
+            return Ok(queue);
+        }
+
+        [HttpGet("{prescriptionId}")]
+        [Authorize(Roles = "Pharmacist,Doctor,Admin")]
+        public async Task<IActionResult> GetPrescriptionDetail(Guid prescriptionId)
+        {
+            var detail = await _pharmacyService.GetPrescriptionDetailAsync(prescriptionId);
+            if (detail == null)
+                return NotFound(new { message = "Prescription not found." });
+            return Ok(detail);
+        }
+
         [HttpGet("{prescriptionId}/items")]
+        [Authorize(Roles = "Pharmacist,Doctor,Admin")]
         public async Task<IActionResult> GetPrescriptionItems(Guid prescriptionId)
         {
             var items = await _pharmacyService.GetPrescriptionItemsAsync(prescriptionId);
             return Ok(items);
         }
 
-        // PATCH: api/prescriptions/items/status
+        
         [HttpPatch("items/status")]
         public async Task<IActionResult> UpdateItemStatus([FromBody] UpdateItemStatusDto request)
         {
@@ -41,7 +59,7 @@ namespace PharmacyMedicationService.Controllers
             }
             catch (InvalidOperationException ex)
             {
-                return BadRequest(new { message = ex.Message }); // e.g. BR-PH-01
+                return BadRequest(new { message = ex.Message }); 
             }
             catch (ArgumentException ex)
             {

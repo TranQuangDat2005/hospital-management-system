@@ -6,6 +6,7 @@ namespace Patient_Scheduling_Service.Interfaces
     {
         Task<Appointments?> GetByIdAsync(int id);
         Task<IEnumerable<Appointments>> GetPatientAppointmentsAsync(int patientId);
+        Task<IEnumerable<Appointments>> GetDoctorAppointmentsAsync(int doctorId);
         Task<bool> HasAppointmentAtTimeAsync(int patientId, DateTime appointmentDate);
         Task<Appointments> CreateAsync(Appointments appointment);
         Task<Appointments> UpdateAsync(Appointments appointment);

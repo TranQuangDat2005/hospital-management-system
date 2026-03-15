@@ -1,4 +1,4 @@
-﻿using User_Authentication_Service.DTOs;
+using User_Authentication_Service.DTOs;
 using User_Authentication_Service.Helpers;
 using User_Authentication_Service.Interfaces;
 using User_Authentication_Service.Model;
@@ -18,6 +18,12 @@ namespace User_Authentication_Service.Services
         {
             var users = await _userRepository.GetUsersAsync();
             return users.Select(MapToDto);
+        }
+
+        public async Task<IEnumerable<UserResponseDto>> GetDoctorsAsync()
+        {
+            var users = await _userRepository.GetUsersAsync();
+            return users.Where(u => u.Role == "Doctor" && u.Status == "Active").Select(MapToDto);
         }
 
         public async Task<UserResponseDto?> GetUserByIdAsync(int id)
@@ -58,6 +64,11 @@ namespace User_Authentication_Service.Services
             var user = await _userRepository.GetUserByIdAsync(id);
             if (user == null)
                 return (false, $"Không tìm thấy người dùng ID={id}.", null);
+
+            
+            
+            
+            
             if (!string.IsNullOrWhiteSpace(dto.FullName))   user.FullName    = dto.FullName;
             if (!string.IsNullOrWhiteSpace(dto.Email))      user.Email       = dto.Email;
             if (!string.IsNullOrWhiteSpace(dto.Phone))      user.Phone       = dto.Phone;
@@ -97,3 +108,4 @@ namespace User_Authentication_Service.Services
         };
     }
 }
+

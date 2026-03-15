@@ -12,10 +12,10 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Load .env file
+
 DotNetEnv.Env.Load();
 
-// Add services to the container.
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -46,7 +46,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// Configure JWT Authentication
+
 var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY") ?? "ThisIsASecretKeyForJwtTokenGenerationWowThisIsLongEnoughToWork";
 var jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER") ?? "HospitalManagementSystem";
 var jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE") ?? "HospitalManagementSystem";
@@ -68,7 +68,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
-// In-Memory Database for testing
+
 builder.Services.AddDbContext<PharmacyMedicationDbContext>(options =>
     options.UseInMemoryDatabase("PharmacyDb"));
 
@@ -77,7 +77,7 @@ builder.Services.AddScoped<IPharmacyService, PharmacyService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -88,7 +88,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-// Seed mock data
+
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<PharmacyMedicationDbContext>();

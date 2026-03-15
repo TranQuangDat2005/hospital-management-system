@@ -21,4 +21,18 @@ namespace PharmacyMedicationService.DTOs
         public string Status { get; set; } = string.Empty;
         public DateTime UpdatedAt { get; set; }
     }
+
+    public class PrescriptionResponseDto
+    {
+        public Guid PrescriptionId { get; set; }
+        public int NumberOfItems { get; set; }
+        public string OverallStatus { get; set; } = string.Empty;
+        public DateTime UpdatedAt { get; set; }
+    }
+
+    public class PrescriptionDetailDto
+    {
+        public Guid PrescriptionId { get; set; }
+        public List<PrescriptionItemResponseDto> Items { get; set; } = new();
+    }
 }

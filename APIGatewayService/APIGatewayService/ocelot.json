@@ -59,6 +59,54 @@
       ],
       "UpstreamPathTemplate": "/gateway/pharmacy/prescriptions/{everything}",
       "UpstreamHttpMethod": [ "Get", "Patch" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/bugreports",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5004
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/ops/bugreports",
+      "UpstreamHttpMethod": [ "Get", "Post" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/bugreports/{id}/status",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5004
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/ops/bugreports/{id}/status",
+      "UpstreamHttpMethod": [ "Patch" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/visitrecord/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7212
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/examination/visits/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Patch" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/examination/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7212
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/examination/api/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post" ]
     }
   ],
   "GlobalConfiguration": {
