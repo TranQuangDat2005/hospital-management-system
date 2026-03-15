@@ -47,6 +47,18 @@
       ],
       "UpstreamPathTemplate": "/gateway/invoice/history",
       "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/prescriptions/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/pharmacy/prescriptions/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Patch" ]
     }
   ],
   "GlobalConfiguration": {
