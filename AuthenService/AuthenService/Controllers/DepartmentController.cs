@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using User_Authentication_Service.DTOs;
 using User_Authentication_Service.Interfaces;
@@ -16,22 +16,12 @@ namespace User_Authentication_Service.Controllers
         {
             _deptService = deptService;
         }
-
-        /// <summary>
-        /// Lấy tất cả phòng ban. Query param: activeOnly=true chỉ lấy Active (BR11 - routing/billing).
-        /// Yêu cầu quyền: departments.read
-        /// </summary>
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] bool activeOnly = false)
         {
             var depts = await _deptService.GetAllAsync(includeInactive: !activeOnly);
             return Ok(depts);
         }
-
-        /// <summary>
-        /// Lấy chi tiết phòng ban theo ID.
-        /// Yêu cầu quyền: departments.read
-        /// </summary>
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -40,11 +30,6 @@ namespace User_Authentication_Service.Controllers
                 return NotFound(new { message = $"Không tìm thấy phòng ban ID={id}." });
             return Ok(dept);
         }
-
-        /// <summary>
-        /// Tạo phòng ban mới. Trạng thái mặc định: Inactive.
-        /// Yêu cầu quyền: departments.create (Admin only)
-        /// </summary>
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateDepartmentDto dto)
         {
@@ -61,11 +46,6 @@ namespace User_Authentication_Service.Controllers
                 data = dept
             });
         }
-
-        /// <summary>
-        /// Cập nhật phòng ban. Admin có thể đổi Status từ Inactive → Active.
-        /// Yêu cầu quyền: departments.update (Admin only)
-        /// </summary>
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateDepartmentDto dto)
         {
@@ -78,18 +58,12 @@ namespace User_Authentication_Service.Controllers
 
             return Ok(new { message, data = dept });
         }
-
-        /// <summary>
-        /// Xóa phòng ban (soft delete). Sẽ bị chặn nếu còn nhân viên Active (dependency check - BR).
-        /// Yêu cầu quyền: departments.delete (Admin only)
-        /// </summary>
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
             var (success, message) = await _deptService.DeleteAsync(id);
             if (!success)
             {
-                // 409 Conflict khi còn dependency, 404 khi không tìm thấy
                 if (message.Contains("không tìm thấy", StringComparison.OrdinalIgnoreCase))
                     return NotFound(new { message });
                 return Conflict(new { message });

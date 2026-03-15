@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using User_Authentication_Service.DTOs;
 using User_Authentication_Service.Interfaces;
@@ -16,20 +16,12 @@ namespace User_Authentication_Service.Controllers
         {
             _userService = userService;
         }
-
-        /// <summary>
-        /// Lấy danh sách tất cả người dùng. Yêu cầu quyền: users.read
-        /// </summary>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var users = await _userService.GetAllUsersAsync();
             return Ok(users);
         }
-
-        /// <summary>
-        /// Lấy thông tin người dùng theo ID. Yêu cầu quyền: users.read
-        /// </summary>
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -39,10 +31,6 @@ namespace User_Authentication_Service.Controllers
 
             return Ok(user);
         }
-
-        /// <summary>
-        /// Tạo người dùng mới. Yêu cầu quyền: users.create
-        /// </summary>
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateUserDto dto)
         {
@@ -59,10 +47,6 @@ namespace User_Authentication_Service.Controllers
                 data = user
             });
         }
-
-        /// <summary>
-        /// Cập nhật thông tin người dùng. Yêu cầu quyền: users.update
-        /// </summary>
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateUserDto dto)
         {
@@ -75,10 +59,6 @@ namespace User_Authentication_Service.Controllers
 
             return Ok(new { message, data = user });
         }
-
-        /// <summary>
-        /// Xóa người dùng. Yêu cầu quyền: users.delete
-        /// </summary>
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {

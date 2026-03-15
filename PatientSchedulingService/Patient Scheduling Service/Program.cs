@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -13,22 +13,14 @@ using DotNetEnv;
 Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
 builder.Services.AddControllers();
-
-// ─── Database & Repositories ─────────────────────────────────────────────────
 builder.Services.AddDbContext<PatientScheduleDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreConnection")));
 
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
-
-// ─── Business Services ───────────────────────────────────────────────────────
 builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddScoped<IAppointmentService, AppointmentService>();
-
-// ─── JWT Authentication ──────────────────────────────────────────────────────
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var secretKey = jwtSettings["SecretKey"] ?? throw new InvalidOperationException("JWT SecretKey chưa cấu hình!");
 
@@ -53,8 +45,6 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddAuthorization();
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -81,8 +71,6 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

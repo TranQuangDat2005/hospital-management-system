@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using User_Authentication_Service.DTOs;
 using User_Authentication_Service.Interfaces;
@@ -16,20 +16,12 @@ namespace User_Authentication_Service.Controllers
         {
             _permissionService = permissionService;
         }
-
-        /// <summary>
-        /// Lấy danh sách tất cả quyền. Yêu cầu: permissions.read
-        /// </summary>
         [HttpGet]
         public async Task<IActionResult> GetAllPermissions()
         {
             var result = await _permissionService.GetAllPermissionsAsync();
             return Ok(result);
         }
-
-        /// <summary>
-        /// Tạo quyền mới. Yêu cầu: permissions.create
-        /// </summary>
         [HttpPost]
         public async Task<IActionResult> CreatePermission([FromBody] CreatePermissionDto dto)
         {
@@ -42,10 +34,6 @@ namespace User_Authentication_Service.Controllers
 
             return CreatedAtAction(nameof(GetAllPermissions), new { }, new { message, data });
         }
-
-        /// <summary>
-        /// Xóa quyền theo ID. Yêu cầu: permissions.delete
-        /// </summary>
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeletePermission(int id)
         {
@@ -55,20 +43,12 @@ namespace User_Authentication_Service.Controllers
 
             return Ok(new { message });
         }
-
-        /// <summary>
-        /// Lấy danh sách tất cả Role cùng quyền của chúng. Yêu cầu: permissions.read
-        /// </summary>
         [HttpGet("roles")]
         public async Task<IActionResult> GetAllRoles()
         {
             var result = await _permissionService.GetAllRolesAsync();
             return Ok(result);
         }
-
-        /// <summary>
-        /// Lấy danh sách quyền của một Role cụ thể. Yêu cầu: permissions.read
-        /// </summary>
         [HttpGet("roles/{roleName}")]
         public async Task<IActionResult> GetRolePermissions(string roleName)
         {
@@ -78,10 +58,6 @@ namespace User_Authentication_Service.Controllers
 
             return Ok(result);
         }
-
-        /// <summary>
-        /// Gán quyền cho Role. Yêu cầu: permissions.assign
-        /// </summary>
         [HttpPost("roles/{roleName}/permissions")]
         public async Task<IActionResult> AssignPermission(string roleName, [FromBody] AssignPermissionDto dto)
         {
@@ -94,10 +70,6 @@ namespace User_Authentication_Service.Controllers
 
             return CreatedAtAction(nameof(GetRolePermissions), new { roleName }, new { message, data });
         }
-
-        /// <summary>
-        /// Thu hồi quyền khỏi Role theo RolePermissionID. Yêu cầu: permissions.assign
-        /// </summary>
         [HttpDelete("roles/permissions/{rolePermissionId:int}")]
         public async Task<IActionResult> RevokePermission(int rolePermissionId)
         {

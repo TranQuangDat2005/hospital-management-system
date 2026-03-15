@@ -1,4 +1,4 @@
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using User_Authentication_Service.Interfaces;
 
 namespace User_Authentication_Service.Middleware
@@ -9,21 +9,16 @@ namespace User_Authentication_Service.Middleware
 
         private static readonly Dictionary<(string Method, string PathPattern), string> _permissionMap = new()
         {
-            // Users
             { ("GET",    "/api/users"),                         "users.read"          },
             { ("GET",    "/api/users/"),                        "users.read"          },
             { ("POST",   "/api/users"),                         "users.create"        },
             { ("PUT",    "/api/users/"),                        "users.update"        },
             { ("DELETE", "/api/users/"),                        "users.delete"        },
-
-            // Departments
             { ("GET",    "/api/departments"),                   "departments.read"    },
             { ("GET",    "/api/departments/"),                  "departments.read"    },
             { ("POST",   "/api/departments"),                   "departments.create"  },
             { ("PUT",    "/api/departments/"),                  "departments.update"  },
             { ("DELETE", "/api/departments/"),                  "departments.delete"  },
-
-            // Permissions & Roles
             { ("GET",    "/api/permission"),                    "permissions.read"    },
             { ("POST",   "/api/permission"),                    "permissions.create"  },
             { ("DELETE", "/api/permission/"),                   "permissions.delete"  },

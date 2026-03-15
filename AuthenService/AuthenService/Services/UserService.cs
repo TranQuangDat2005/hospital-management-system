@@ -1,4 +1,4 @@
-using User_Authentication_Service.DTOs;
+﻿using User_Authentication_Service.DTOs;
 using User_Authentication_Service.Helpers;
 using User_Authentication_Service.Interfaces;
 using User_Authentication_Service.Model;
@@ -28,12 +28,9 @@ namespace User_Authentication_Service.Services
 
         public async Task<(bool Success, string Message, UserResponseDto? User)> CreateUserAsync(CreateUserDto dto)
         {
-            // Kiểm tra username đã tồn tại chưa
             var existing = await _userRepository.GetUserByUsernameAsync(dto.UserName);
             if (existing != null)
                 return (false, $"Tên đăng nhập '{dto.UserName}' đã tồn tại.", null);
-
-            // Kiểm tra email đã tồn tại chưa
             var existingEmail = await _userRepository.GetUserByEmailAsync(dto.Email);
             if (existingEmail != null)
                 return (false, $"Email '{dto.Email}' đã được sử dụng.", null);
@@ -61,8 +58,6 @@ namespace User_Authentication_Service.Services
             var user = await _userRepository.GetUserByIdAsync(id);
             if (user == null)
                 return (false, $"Không tìm thấy người dùng ID={id}.", null);
-
-            // Chỉ cập nhật trường nào có giá trị
             if (!string.IsNullOrWhiteSpace(dto.FullName))   user.FullName    = dto.FullName;
             if (!string.IsNullOrWhiteSpace(dto.Email))      user.Email       = dto.Email;
             if (!string.IsNullOrWhiteSpace(dto.Phone))      user.Phone       = dto.Phone;

@@ -3,14 +3,12 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+#pragma warning disable CA1814 
 
 namespace User_Authentication_Service.Migrations
 {
-    /// <inheritdoc />
     public partial class AddPermissionsAndAuthFeature : Migration
     {
-        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -89,8 +87,6 @@ namespace User_Authentication_Service.Migrations
                 columns: new[] { "RoleName", "PermissionID" },
                 unique: true);
         }
-
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

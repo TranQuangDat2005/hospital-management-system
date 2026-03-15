@@ -4,10 +4,8 @@
 
 namespace User_Authentication_Service.Migrations
 {
-    /// <inheritdoc />
     public partial class RemoveHeadOfDeptAddDescription : Migration
     {
-        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
@@ -22,8 +20,6 @@ namespace User_Authentication_Service.Migrations
                 nullable: false,
                 defaultValue: "");
         }
-
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(

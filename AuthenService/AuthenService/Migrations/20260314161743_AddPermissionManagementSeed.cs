@@ -1,13 +1,11 @@
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace User_Authentication_Service.Migrations
 {
-    /// <inheritdoc />
     public partial class AddPermissionManagementSeed : Migration
     {
-        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.InsertData(
@@ -32,8 +30,6 @@ namespace User_Authentication_Service.Migrations
                     { 23, 23, "Admin" }
                 });
         }
-
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DeleteData(

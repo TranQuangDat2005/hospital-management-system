@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using User_Authentication_Service.Data;
 using User_Authentication_Service.Interfaces;
 using User_Authentication_Service.Model;
@@ -13,8 +13,6 @@ namespace User_Authentication_Service.Repositories
         {
             _context = context;
         }
-
-        // ── Read ──────────────────────────────────────────────────────────────
 
         public async Task<IEnumerable<string>> GetPermissionNamesByRoleAsync(string roleName)
         {
@@ -82,8 +80,6 @@ namespace User_Authentication_Service.Repositories
                 .AsNoTracking()
                 .AnyAsync(rp => rp.RoleName == roleName && rp.PermissionID == permissionId);
         }
-
-        // ── Write ─────────────────────────────────────────────────────────────
 
         public async Task<Permission> CreatePermissionAsync(Permission permission)
         {

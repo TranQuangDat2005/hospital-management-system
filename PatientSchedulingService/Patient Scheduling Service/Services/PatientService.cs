@@ -1,4 +1,4 @@
-using Patient_Scheduling_Service.DTOs;
+﻿using Patient_Scheduling_Service.DTOs;
 using Patient_Scheduling_Service.Interfaces;
 using Patient_Scheduling_Service.Model;
 using System.Text.RegularExpressions;
@@ -16,11 +16,8 @@ namespace Patient_Scheduling_Service.Services
 
         public async Task<Patients> RegisterPatientAsync(PatientRegistrationDto dto)
         {
-            // BR7: Kiểm tra định dạng 12 số CCCD (mặc dù đã có ở DTO, nhưng validate lại ở Service cho chắc chắn)
             if (!Regex.IsMatch(dto.CCCD, @"^\d{12}$"))
                 throw new ArgumentException("CCCD phải bao gồm đúng 12 chữ số.");
-
-            // BR1: Kiểm tra trùng lặp CCCD
             if (await _patientRepository.IsCccdExistsAsync(dto.CCCD))
                 throw new ArgumentException("CCCD này đã tồn tại trong hệ thống.");
 
@@ -32,7 +29,7 @@ namespace Patient_Scheduling_Service.Services
                 Gender = dto.Gender,
                 Phone = dto.PhoneNumber,
                 Address = dto.Address,
-                UserID = dto.UserID ?? 0 // Có thể truyền UserID từ token qua DTO hoặc gán ở Controller
+                UserID = dto.UserID ?? 0 
             };
 
             return await _patientRepository.CreateAsync(newPatient);
@@ -40,7 +37,6 @@ namespace Patient_Scheduling_Service.Services
 
         public async Task<Patients?> IdentifyPatientAsync(string? cccd, string? phone)
         {
-            // UC-RC-06: Tra cứu hồ sơ
             if (string.IsNullOrEmpty(cccd) && string.IsNullOrEmpty(phone))
                 throw new ArgumentException("Vui lòng cung cấp CCCD hoặc Số điện thoại để tra cứu.");
 
@@ -52,9 +48,6 @@ namespace Patient_Scheduling_Service.Services
             var existingPatient = await _patientRepository.GetByIdAsync(patientId);
             if (existingPatient == null)
                 throw new KeyNotFoundException("Không tìm thấy bệnh nhân.");
-
-            // Lưu ý: Thường CCCD không cho phép sửa dễ dàng, ở đây có thể thêm logic 
-            // kiểm tra quyền admin nếu dto.CCCD khác existingPatient.IdentityCard
             
             existingPatient.FullName = dto.FullName;
             existingPatient.DateOfBirth = dto.DateOfBirth;

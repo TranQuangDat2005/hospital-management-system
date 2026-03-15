@@ -1,4 +1,4 @@
-using User_Authentication_Service.DTOs;
+﻿using User_Authentication_Service.DTOs;
 using User_Authentication_Service.Interfaces;
 using User_Authentication_Service.Model;
 
@@ -27,7 +27,6 @@ namespace User_Authentication_Service.Services
 
         public async Task<(bool Success, string Message, DepartmentResponseDto? Data)> CreateAsync(CreateDepartmentDto dto)
         {
-            // Xác thực: tên phòng ban không được trùng
             var existing = await _deptRepo.GetByNameAsync(dto.Name);
             if (existing != null)
                 return (false, $"Phòng ban '{dto.Name}' đã tồn tại.", null);
@@ -53,8 +52,6 @@ namespace User_Authentication_Service.Services
             var dept = await _deptRepo.GetByIdAsync(id);
             if (dept == null)
                 return (false, $"Không tìm thấy phòng ban ID={id}.", null);
-
-            // Kiểm tra tên trùng (nếu có đổi tên)
             if (!string.IsNullOrWhiteSpace(dto.Name) && dto.Name != dept.Name)
             {
                 var nameExists = await _deptRepo.GetByNameAsync(dto.Name);
@@ -65,8 +62,6 @@ namespace User_Authentication_Service.Services
 
             if (!string.IsNullOrWhiteSpace(dto.Location))    dept.Location    = dto.Location.Trim();
             if (!string.IsNullOrWhiteSpace(dto.Description)) dept.Description = dto.Description.Trim();
-
-            // Chuyển đổi trạng thái (Inactive ↔ Active) — Admin thực hiện thủ công theo spec
             if (!string.IsNullOrWhiteSpace(dto.Status))     dept.Status     = dto.Status;
 
             _deptRepo.Update(dept);
@@ -80,13 +75,9 @@ namespace User_Authentication_Service.Services
             var dept = await _deptRepo.GetByIdAsync(id);
             if (dept == null)
                 return (false, $"Không tìm thấy phòng ban ID={id}.");
-
-            // Dependency check: còn nhân viên Active không?
             var hasActiveUsers = await _deptRepo.HasActiveUsersAsync(id);
             if (hasActiveUsers)
                 return (false, "Không thể xóa phòng ban đang có nhân viên hoạt động. Vui lòng chuyển hoặc ngừng hoạt động các nhân viên trước.");
-
-            // Soft delete — giữ hồ sơ lịch sử (Business Rule)
             await _deptRepo.SoftDeleteAsync(id);
             await _deptRepo.SaveChangesAsync();
 

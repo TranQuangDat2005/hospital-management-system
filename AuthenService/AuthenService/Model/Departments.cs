@@ -1,4 +1,4 @@
-namespace User_Authentication_Service.Model
+﻿namespace User_Authentication_Service.Model
 {
     public class Departments
     {
@@ -9,8 +9,6 @@ namespace User_Authentication_Service.Model
         public string Status { get; set; } = "Inactive";          
         public bool IsDeleted { get; set; } = false;              
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
-        // Navigation property
         public ICollection<Users> Users { get; set; } = new List<Users>();
     }
 }

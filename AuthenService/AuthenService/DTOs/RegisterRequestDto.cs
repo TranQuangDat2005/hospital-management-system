@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace User_Authentication_Service.DTOs
 {
@@ -22,6 +22,5 @@ namespace User_Authentication_Service.DTOs
 
         [Phone(ErrorMessage = "Số điện thoại không hợp lệ")]
         public string Phone { get; set; } = string.Empty;
-        // Role tự động gán "Patient" — không nhận từ client
     }
 }

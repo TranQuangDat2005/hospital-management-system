@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Patient_Scheduling_Service.Data;
 using Patient_Scheduling_Service.Interfaces;
 using Patient_Scheduling_Service.Model;
@@ -29,8 +29,6 @@ namespace Patient_Scheduling_Service.Repositories
 
         public async Task<bool> HasAppointmentAtTimeAsync(int patientId, DateTime appointmentDate)
         {
-            // Kiểm tra xem bệnh nhân đã có một cuộc hẹn trong cùng một khung giờ hay không.
-            // Giả định một lịch hẹn trùng khớp khi nó diễn ra đúng tại thời gian AppointmentDate đó.
             return await _context.Appointments
                 .AnyAsync(a => a.PatientID == patientId && a.AppointmentDate == appointmentDate && !a.IsDeleted);
         }

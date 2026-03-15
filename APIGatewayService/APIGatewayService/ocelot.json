@@ -1,0 +1,56 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/servicecatalog/active",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7241
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/services/active",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/billing/visit/{visitId}/inquiry",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7241
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/billing/visit/{visitId}/inquiry",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/payment/process",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7241
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/payment/process",
+      "UpstreamHttpMethod": [ "Post" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/invoice/history",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7241
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/invoice/history",
+      "UpstreamHttpMethod": [ "Get" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:7000"
+  }
+}
+

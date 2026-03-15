@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace User_Authentication_Service.DTOs
 {
@@ -14,6 +14,5 @@ namespace User_Authentication_Service.DTOs
 
         [MaxLength(500)]
         public string Description { get; set; } = string.Empty;
-        // Status mặc định Inactive theo spec — không nhận từ client
     }
 }

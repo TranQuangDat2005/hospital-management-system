@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using User_Authentication_Service.DTOs;
 using User_Authentication_Service.Interfaces;
@@ -15,10 +15,6 @@ namespace User_Authentication_Service.Controllers
         {
             _authService = authService;
         }
-
-        /// <summary>
-        /// Đăng nhập - trả về JWT token.
-        /// </summary>
         [HttpPost("login")]
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto dto)
@@ -33,10 +29,6 @@ namespace User_Authentication_Service.Controllers
 
             return Ok(result);
         }
-
-        /// <summary>
-        /// Đăng ký tài khoản - chỉ dành cho Guest, tự động gán role Patient.
-        /// </summary>
         [HttpPost("register")]
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegisterRequestDto dto)
@@ -51,10 +43,6 @@ namespace User_Authentication_Service.Controllers
 
             return StatusCode(StatusCodes.Status201Created, new { message, data = user });
         }
-
-        /// <summary>
-        /// Đăng xuất - blacklist JWT token hiện tại.
-        /// </summary>
         [HttpPost("logout")]
         [Authorize]
         public IActionResult Logout()
@@ -70,10 +58,6 @@ namespace User_Authentication_Service.Controllers
             _authService.Logout(token);
             return Ok(new { message = "Đăng xuất thành công." });
         }
-
-        /// <summary>
-        /// Lấy thông tin user đang đăng nhập.
-        /// </summary>
         [HttpGet("me")]
         [Authorize]
         public IActionResult GetMe()

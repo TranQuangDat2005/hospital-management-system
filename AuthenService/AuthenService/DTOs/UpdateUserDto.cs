@@ -1,4 +1,4 @@
-namespace User_Authentication_Service.DTOs
+﻿namespace User_Authentication_Service.DTOs
 {
     public class UpdateUserDto
     {
@@ -8,6 +8,6 @@ namespace User_Authentication_Service.DTOs
         public string? Role { get; set; }
         public int? DepartmentID { get; set; }
         public string? Status { get; set; }
-        public string? Password { get; set; }  // null = không đổi password
+        public string? Password { get; set; }  
     }
 }
